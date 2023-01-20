@@ -11,32 +11,66 @@
     - Change Ubuntu-lv to use max volume to use all the storage
     - Enable install openssh server
 - Ssh into server
-    - ssh [username]@[server ip]
-    - sudo apt update
-    - sudo apt upgrade
+    ```bash
+    ssh [username]@[server ip]
+    ```
+    ```bash
+    sudo apt update
+    ```
+    ```bash
+    sudo apt upgrade
+    ```
 - Server Security
     - Use keys instead of password to ssh into server
-        - On server type: mkdir ~/.ssh && chmod 700 ~/.ssh 
-        - On computer: ssh-keygen -b 4096
-        - cd .ssh
-        - scp $env:USERPROFILE/.ssh/id_rsa.pub [username]@[server ip]:~/.ssh/authorized_keys
+    - On server type: 
+        ```bash
+        mkdir ~/.ssh && chmod 700 ~/.ssh 
+        ```
+    - On computer: 
+        ```bash
+        ssh-keygen -b 4096
+        ```
+        ```bash
+        cd .ssh
+        ```
+        ```bash
+        scp $env:USERPROFILE/.ssh/id_rsa.pub [username]@[server ip]:~/.ssh/authorized_keys
+        ```
     - Remove password options, set new port
-        - sudo nano /etc/ssh/sshd_config
+        ```bash
+        sudo nano /etc/ssh/sshd_config
+        ```
         - Uncomment and change
             - Port to [New Port]
             - AddressFamily any to inet
             - PermitRootLogin to no
             - PasswordAuthentication to no
         - Press Ctrl X then Y then Enter
-        - sudo systemctl restart sshd
-        - ssh [username]@[server ip] -p [The set new port number]
+        ```bash
+        sudo systemctl restart sshd
+        ```
+        ```bash
+        ssh [username]@[server ip] -p [The set new port number]
+        ```
     - Setup Firewall
-        - sudo ss -tupln
-        - sudo apt install ufw
-        - sudo ufw allow [The set new port number]
-        - sudo ufw status
-        - sudo nano /etc/ufw/before.rules
+        ```bash
+        sudo ss -tupln
+        ```
+        ```bash
+        sudo apt install ufw
+        ```
+        ```bash
+        sudo ufw allow [The set new port number]
+        ```
+        ```bash
+        sudo ufw status
+        ```
+        ```bash
+        sudo nano /etc/ufw/before.rules
+        ```
         - Type right after # ok icmp codes for INPUT
-            - A ufw-before-input -p icmp --icmp-type echo-request -j DROP
+            - -A ufw-before-input -p icmp --icmp-type echo-request -j DROP
         - Press Ctrl X then Y then Enter
-        - sudo reboot
+        ```bash
+        sudo reboot
+        ```
